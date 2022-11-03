@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { logo, heroImg } from '../assets'
 import styles from '../styles'
 
-const PageHOC = (component, title, description) => () => {
+const PageHOC = (Component, title, description) => () => {
 
     const navigate = useNavigate();
   return (
