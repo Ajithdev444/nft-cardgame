@@ -13,6 +13,7 @@ export const GlobalContextProvider = ({ children }) => {
     const [walletAddress, setWalletAddress] = useState('')
     const [provider, setProvider] = useState('');
     const [contract, setContract] = useState('');
+    const [showAlert,setShowAlert] = useState({ status:false,type:'info',message:''})
 
     //* set the wallet address to the state
     const updateCurrentWalletAddress = async () =>{
@@ -33,7 +34,7 @@ export const GlobalContextProvider = ({ children }) => {
             const connection = await web3Modal.connect();
             const newProvider = new ethers.providers.Web3Provider
             (connection);
-            const signer = newProvider.signer();
+            const signer = newProvider.getSigner();
             const newContract = new ethers.Contract(ABI,ADDRESS,signer); 
 
             setProvider(newProvider);
@@ -41,13 +42,21 @@ export const GlobalContextProvider = ({ children }) => {
         }
         setSmartContractAndProvider();
     },[])
+
+    useEffect(() =>{
+        if(showAlert?.status) {
+            const timer = setTimeout(() => {
+                setShowAlert({ status:false, type:'info', message:''})
+            },[5000])
+        return() => clearTimeout(timer)
+        }
+    },[showAlert])
     return (
         <GlobalContext.Provider value={{
-            contract,walletAddress
+            contract,walletAddress,showAlert,setShowAlert
 
         }}>
             {children}
-
         </GlobalContext.Provider>
     )
 }

@@ -4,14 +4,28 @@ import { useGlobalContext } from '../context';
 
 
 const Home = () => {
-  const { contract, walletAddress } = useGlobalContext();
+  const { contract, walletAddress,setShowAlert } = useGlobalContext();
   const [playerName, setPlayerName] = useState('');
 
   const handleClick = async() => {
     try {
-      
+      const  playerExists = await contract.player(walletAddress);
+
+      if(!playerExists) {
+        await contract.registerPlayer(playerName,playerName)
+        setShowAlert({
+          status:false,
+          type:'info',
+          message:`${playerName} is being summoned!`
+        })
+      }
     } catch (error) {
-      
+      setShowAlert({
+        status:true,
+        type:'failure',
+        message: "something went wrong"
+      })
+      alert(error)
     }
   }
   return (
