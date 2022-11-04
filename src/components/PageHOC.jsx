@@ -14,7 +14,7 @@ const PageHOC = (Component, title, description) => () => {
     const navigate = useNavigate();
   return (
     <div className={styles.hocContainer}>
-        { showAlert.status && <Alert type={showAlert} message={showAlert.message}/>}
+        { showAlert?.status && <Alert type={showAlert.type} message={showAlert.message}/>}
         <div className={styles.hocContentBox}>
             <img src={logo} alt='logo' className={styles.hocLogo} onClick={()=>navigate('/')}/>
 

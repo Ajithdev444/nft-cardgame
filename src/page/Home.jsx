@@ -11,12 +11,12 @@ const Home = () => {
 
   const handleClick = async() => {
     try {
-      const  playerExists = await contract.isPlayer(walletAddress);
+      const playerExists = await contract.isPlayer(walletAddress);
 
       if(!playerExists) {
         await contract.registerPlayer(playerName,playerName)
         setShowAlert({
-          status:false,
+          status:true,
           type:'info',
           message:`${playerName} is being summoned!`
         })
@@ -25,9 +25,8 @@ const Home = () => {
       setShowAlert({
         status:true,
         type:'failure',
-        message: "something went wrong"
+        message: "Something went wrong"
       })
-      alert(error)
     }
   }
 
@@ -46,7 +45,7 @@ const Home = () => {
         label='Name'
         placeholder='Enter your player name'
         value={playerName}
-        handleValueChanged={setPlayerName}
+        handleValueChange={setPlayerName}
         />
         <CustomButton
         title='Register'
@@ -60,6 +59,6 @@ const Home = () => {
 export default PageHOC(
   Home,
   <>Welcome to Avax Gods <br/>a Web3 NFT Card Game</>,
-  <>Connect your wallet to start playing <br/> the unlimited
+  <>Connect your wallet to start playing <br/> the ultimate
   Web3 Battle Card Game</>
 );
